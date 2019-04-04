@@ -1,5 +1,5 @@
 from scapy.all import *
-from default import PSniffer
+from plugins.analyzers.default import PSniffer
 
 class ftp(PSniffer):
     ''' this script capture credentials of service ftp request HTTP '''

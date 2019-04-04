@@ -51,7 +51,7 @@ class MitmMode(Widget):
         self.ConfigWindow.setWindowTitle("{} Settings".format(self.Name))
 
         self.controlui = QtGui.QCheckBox(self.Name)
-        self.controlui.setObjectName(QtCore.QString(self.Description))
+        self.controlui.setObjectName(self.Description)
         self.controlui.setChecked(self.FSettings.Settings.get_setting('mitmhandler', self.Name, format=bool))
         self.controlui.toggled.connect(self.CheckOptions)
 

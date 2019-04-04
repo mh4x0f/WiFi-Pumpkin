@@ -1,5 +1,5 @@
 from scapy.all import *
-from default import PSniffer
+from plugins.analyzers.default import PSniffer
 import sys
 from io import StringIO
 

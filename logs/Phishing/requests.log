@@ -1,0 +1,9 @@
+SessionID[] 2019-04-02 11:13:11,615 : Connected : 127.0.0.1
+SessionID[] 2019-04-02 11:13:11,700 : GET / HTTP/1.1
+SessionID[] 2019-04-02 11:13:12,437 : Connected : 127.0.0.1
+SessionID[] 2019-04-02 11:13:12,438 : HTTPStatus.NOT_FOUND
+SessionID[] 2019-04-02 11:13:12,438 : GET /favicon.ico HTTP/1.1
+SessionID[] 2019-04-02 11:13:52,180 : Connected : 127.0.0.1
+SessionID[] 2019-04-02 11:13:52,180 : Connected : 127.0.0.1
+SessionID[] 2019-04-02 11:13:52,198 : GET / HTTP/1.1
+SessionID[] 2019-04-02 11:13:52,198 : GET / HTTP/1.1

@@ -50,7 +50,7 @@ class set_monitor_mode(QtGui.QDialog):
             if len(output) > 0:QtGui.QMessageBox.information(self,'Monitor Mode',
             'device %s.%s'%(self.interface,output))
             return self.interface
-        except Exception ,e:
+        except Exception as e:
             QtGui.QMessageBox.information(self,'Monitor Mode',
             'mode on device %s.your card does not support Monitor Mode'%(self.interface))
     def setDisable(self):
@@ -68,13 +68,13 @@ class ThreadPhishingServer(QtCore.QThread):
         self.process = None
 
     def run(self):
-        print 'Starting Thread:' + self.objectName()
+        print('Starting Thread:' + self.objectName())
         self.process = Popen(self.cmd,stdout=PIPE,stderr=STDOUT)
         for line in iter(self.process.stdout.readline, b''):
             self.send.emit(line.rstrip())
 
     def stop(self):
-        print 'Stop thread:' + self.objectName()
+        print('Stop thread:' + self.objectName())
         if self.process is not None:
             self.process.terminate()
 
@@ -198,7 +198,7 @@ class Refactor:
                 config.read(networkmanager)
                 try:
                     config.add_section('keyfile')
-                except configparser.DuplicateSectionError, e:
+                except configparser.DuplicateSectionError as e:
                     config.set('keyfile','unmanaged-devices','{}'.format(
                         exclude['interface'] if MAC != None else exclude['MAC']))
                 else:
@@ -351,7 +351,7 @@ class Refactor:
     @staticmethod
     def generateSessionID():
         ''' generate session encoded base64 '''
-        return str(b64encode(str(random.randint(0,100000))))
+        return str(b64encode(str(random.randint(0,100000) ).encode() ))
 
 class waiterSleepThread(QtCore.QThread):
     ''' Simples Thread for wait 10 segunds for check update app'''
@@ -371,7 +371,7 @@ def is_hexadecimal(text):
 
 def is_ascii( text):
     try:
-        text.decode('ascii')
+        text # text.decode('ascii')
     except UnicodeDecodeError:
         return False
     else:

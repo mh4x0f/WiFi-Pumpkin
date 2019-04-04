@@ -17,7 +17,7 @@ from core.utility.collection import SettingsINI
 from core.widgets.docks.dockmonitor import (
     dockTCPproxy,dockUrlMonitor
 )
-from plugins.external.scripts import *
+#from plugins.external.scripts import *
 from plugins.analyzers import *
 from core.widgets.docks.dock import DockableWidget
 
@@ -38,7 +38,7 @@ class TCPProxyDock(DockableWidget):
         self.maindockwidget.verticalHeader().setDefaultSectionSize(27)
         self.maindockwidget.setSortingEnabled(True)
         self.THeaders  = OrderedDict([ ('Plugin',[]),('Logging',[])])
-        self.maindockwidget.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.maindockwidget.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.maindockwidget.horizontalHeader().resizeSection(0,150)
         self.maindockwidget.horizontalHeader().resizeSection(1,150)
         self.setWidget(self.maindockwidget)
@@ -58,14 +58,14 @@ class TCPProxyDock(DockableWidget):
                     item.setTextAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignVCenter)
                     #item.setTextAlignment(Qt.AlignVCenter | Qt.AlignCenter)
                 self.maindockwidget.setItem(m, n, item)
-        self.maindockwidget.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.maindockwidget.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.maindockwidget.verticalHeader().setDefaultSectionSize(27)
         self.maindockwidget.scrollToBottom()
 
     def stopProcess(self):
         self.maindockwidget.setRowCount(0)
         self.maindockwidget.clearContents()
-        self.maindockwidget.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.maindockwidget.setHorizontalHeaderLabels(list(self.THeaders.keys()))
 
 class TCPProxy(ProxyMode):
     Name = "TCP Proxy"
@@ -121,7 +121,7 @@ class TCPProxy(ProxyMode):
         self.TabPlugins.verticalHeader().setDefaultSectionSize(27)
         self.TabPlugins.setSortingEnabled(True)
         self.THeaders = OrderedDict([('Plugins', []), ('Author', []), ('Description', [])])
-        self.TabPlugins.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.TabPlugins.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.TabPlugins.horizontalHeader().resizeSection(0, 158)
         self.TabPlugins.horizontalHeader().resizeSection(1, 120)
 
@@ -149,7 +149,7 @@ class TCPProxy(ProxyMode):
                 else:
                     item = QtGui.QTableWidgetItem(item)
                     self.TabPlugins.setItem(m, n, item)
-        self.TabPlugins.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.TabPlugins.setHorizontalHeaderLabels(list(self.THeaders.keys()))
 
         # check status all checkbox plugins
         for box in self.check_PluginDict.keys():
@@ -255,7 +255,7 @@ class TCPProxyCore(QThread):
             self.plugins[plugin_load.Name] = plugin_load
             self.plugins[plugin_load.Name].output = self._ProcssOutput
             self.plugins[plugin_load.Name].session = self.session
-        print '\n[*] TCPProxy running on port 80/8080:\n'
+        print('\n[*] TCPProxy running on port 80/8080:\n')
         for name in self.plugins.keys():
             if self.config.get_setting('plugins', name, format=bool):
                 self.plugins[name].getInstance()._activated = True
@@ -300,7 +300,7 @@ class TCPProxyCore(QThread):
         if 'search?q' in search :
             searched = search.split('search?q=',1)[1]
             searched = searched.replace('+',' ')
-            print 'Search::BING { %s }'%(searched)
+            print('Search::BING { %s }'%(searched))
 
     def getCredentials_POST(self,payload,url,header,dport,sport):
         user_regex = '([Ee]mail|%5B[Ee]mail%5D|[Uu]ser|[Uu]sername|' \
@@ -331,4 +331,4 @@ class TCPProxyCore(QThread):
 
     def stop(self):
         self.stopped = True
-        print 'Thread::[{}] successfully stopped.'.format(self.objectName())
+        print('Thread::[{}] successfully stopped.'.format(self.objectName()))

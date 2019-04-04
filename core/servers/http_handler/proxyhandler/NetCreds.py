@@ -22,7 +22,7 @@ class NetCredential(DockableWidget):
         self.maindockwidget.verticalHeader().setDefaultSectionSize(27)
         self.maindockwidget.setSortingEnabled(True)
         self.THeaders  = OrderedDict([ ('Username',[]),('Password',[]),('Url',[]),('Source/Destination',[])])
-        self.maindockwidget.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.maindockwidget.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.maindockwidget.horizontalHeader().resizeSection(0,120)
         self.maindockwidget.horizontalHeader().resizeSection(1,120)
         self.maindockwidget.horizontalHeader().resizeSection(2,180)
@@ -42,14 +42,14 @@ class NetCredential(DockableWidget):
                 item = QTableWidgetItem(item)
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignCenter)
                 self.maindockwidget.setItem(m, n, item)
-        self.maindockwidget.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.maindockwidget.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.maindockwidget.verticalHeader().setDefaultSectionSize(27)
         self.maindockwidget.scrollToBottom()
 
     def stopProcess(self):
         self.maindockwidget.setRowCount(0)
         self.maindockwidget.clearContents()
-        self.maindockwidget.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.maindockwidget.setHorizontalHeaderLabels(list(self.THeaders.keys()))
 class NetCreds(MitmMode):
     Name = "Net Credentials"
     ID = "NetCreds"

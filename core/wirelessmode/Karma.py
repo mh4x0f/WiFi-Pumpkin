@@ -69,7 +69,7 @@ class KarmaSettings(CoreSettings):
         self.HostapdKarmaPath.setText(self.FSettings.Settings.get_setting(
             self.ConfigRoot, '{}_hostapd_path'.format(self.ConfigRoot)))
         self.HostapdConf = QtGui.QComboBox()
-        os.path.walk('core/config/hostapd', self.osWalkCallback, None)
+        os.walk('core/config/hostapd', self.osWalkCallback, None)
 
         self.EnableMana = QtGui.QGroupBox("Enable Karma")
         self.EnableMana.setCheckable(True)

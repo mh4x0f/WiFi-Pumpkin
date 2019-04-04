@@ -42,7 +42,7 @@ class Mode(QtGui.QWidget):
         if not path.isfile(self.hostapd_path):
             return QtGui.QMessageBox.information(self,'Error Hostapd','hostapd is not installed')
         if self.FSettings.Settings.get_setting('accesspoint','dhcpd_server',format=bool):
-            if not self.SettingsEnable['ProgCheck'][3]:
+            if not self.parent.SettingsEnable['ProgCheck'][3]:
                 return QtGui.QMessageBox.warning(self,'Error dhcpd','isc-dhcp-server (dhcpd) is not installed')
         return True
     def configure_network_AP(self):

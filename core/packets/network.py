@@ -1,4 +1,4 @@
-import Queue
+import queue as Queue
 from os import system
 from scapy.all import *
 from threading import Thread
@@ -34,7 +34,7 @@ class ThreadAttackStar(QThread):
         self.process = True
 
     def run(self):
-        print "Starting Thread:" + self.objectName()
+        print("Starting Thread:" + self.objectName())
         self.count = 0
         while self.process:
             conf.checkIPaddr = False
@@ -49,7 +49,7 @@ class ThreadAttackStar(QThread):
             self.emit(SIGNAL("Activated( QString )"),self.data.rstrip())
         self.emit(SIGNAL("Activated( QString )"),"[ OFF ] Packet sent: " + str(self.count))
     def stop(self):
-        print "Stop thread:" + self.objectName()
+        print("Stop thread:" + self.objectName())
         self.process = False
 
 
@@ -71,13 +71,13 @@ class ThARP_posion(QThread):
         return packet_arp
 
     def run(self):
-        print 'Starting Thread:' + self.objectName()
+        print('Starting Thread:' + self.objectName())
         pkt = self.makePacket()
         while self.process:
             send(pkt,verbose=False, count=3),sendp(pkt,verbose=False, count=3)
     def stop(self):
         self.process = False
-        print 'Stop thread:' + self.objectName()
+        print('Stop thread:' + self.objectName())
         self.emit(SIGNAL('Activated( QString )'),'Ok')
 
 
@@ -130,7 +130,7 @@ class ThSpoofAttack(QThread):
         self.desc       = ['Module DNS spoof']
 
     def run(self):
-        print 'Starting Thread:' + self.objectName()
+        print('Starting Thread:' + self.objectName())
         self.sniff()
 
     def ARP(self,target,gateway):
@@ -205,7 +205,7 @@ class ThSpoofAttack(QThread):
         system('iptables -t nat -{} PREROUTING -i {} -p tcp --dport 53 -j DNAT --to {}'.format(option,self.interface,self.redirect))
 
     def stop(self):
-        print 'Stop Thread:' + self.objectName()
+        print('Stop Thread:' + self.objectName())
         self.finished = True
         self.setIptables(option='D')
         self.emit(SIGNAL('Activated( QString )'),'finished')

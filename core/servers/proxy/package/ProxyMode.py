@@ -58,12 +58,12 @@ class ProxyMode(Widget,ComponentBlueprint):
 
         if (self.TypePlugin == 1):
             self.controlui = QtGui.QRadioButton(self.Name)
-            self.controlui.setObjectName(QtCore.QString(self.Description))
+            self.controlui.setObjectName(self.Description)
             self.controlui.setChecked(self.FSettings.Settings.get_setting('plugins', self.Name, format=bool))
             self.controlui.toggled.connect(self.CheckOptions)
         else:
             self.controlui = QtGui.QCheckBox(self.Name)
-            self.controlui.setObjectName(QtCore.QString(self.Description))
+            self.controlui.setObjectName(self.Description)
             self.controlui.setChecked(self.FSettings.Settings.get_setting('plugins', self.Name, format=bool))
             self.controlui.toggled.connect(self.CheckOptions)
 
@@ -154,7 +154,7 @@ class ProxyMode(Widget,ComponentBlueprint):
         return self.search[type]
     def SetRules(self,strrules=""):
         items = []
-        for index in xrange(self.FSettings.ListRules.count()):
+        for index in range(self.FSettings.ListRules.count()):
             items.append(str(self.FSettings.ListRules.item(index).text()))
         if self.optionsRules(strrules) in items:
             return
@@ -181,7 +181,7 @@ class ProxyMode(Widget,ComponentBlueprint):
     def unset_Rules(self,type):
         ''' remove rules from Listwidget in settings widget'''
         items = []
-        for index in xrange(self.FSettings.ListRules.count()):
+        for index in range(self.FSettings.ListRules.count()):
             items.append(str(self.FSettings.ListRules.item(index).text()))
         for position,line in enumerate(items):
             if self.optionsRules(type) == line:

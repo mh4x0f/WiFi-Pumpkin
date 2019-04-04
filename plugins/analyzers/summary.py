@@ -1,5 +1,5 @@
 from scapy.all import *
-from default import PSniffer
+from plugins.analyzers.default import PSniffer
 from dns import resolver
 
 class Summary(PSniffer):

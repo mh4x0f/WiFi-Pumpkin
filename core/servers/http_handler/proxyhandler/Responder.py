@@ -102,7 +102,7 @@ class ResponderSettings(PumpkinModule):
         self.TabSettings.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         #self.TabSettings.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.TabSettings.verticalHeader().setVisible(False)
-        self.TabSettings.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.TabSettings.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.TabSettings.verticalHeader().setDefaultSectionSize(23)
 
         self.layout = QtGui.QVBoxLayout(self.widget)

@@ -21,13 +21,13 @@ class SessionConfig(TabsWidget):
         self.mainlayout.addWidget(self.tabcontainer)
         settingsItem = [setitem(self.parent ) for setitem in CoreSettings.__subclasses__()]
         self.settingsItem = {}
-        for cat in sorted(settingsItem):
+        for cat in settingsItem:
             self.tablayout[cat.Category] = QtGui.QVBoxLayout()
             self.tabwidget[cat.Category] = QtGui.QWidget()
             self.tabwidget[cat.Category].setLayout(self.tablayout[cat.Category])
         for k,v in self.tabwidget.items():
             self.tabcontainer.addTab(v,k)
-        for mod in sorted(settingsItem):
+        for mod in settingsItem:
             self.settingsItem[mod.title]=mod
             self.tablayout[mod.Category].addWidget(mod)
             #self.mainlayout.addWidget(mod)

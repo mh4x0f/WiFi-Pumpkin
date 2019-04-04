@@ -66,7 +66,7 @@ class ProxyModeController(PluginsUI,ControllerBlueprint):
         self.table.verticalHeader().setVisible(False)
         self.table.verticalHeader().setDefaultSectionSize(23)
         self.table.setSortingEnabled(True)
-        self.table.setHorizontalHeaderLabels(self.THeadersPluginsProxy.keys())
+        self.table.setHorizontalHeaderLabels(list(self.THeadersPluginsProxy.keys()))
         self.table.horizontalHeader().resizeSection(0, 158)
         self.table.horizontalHeader().resizeSection(1, 80)
         self.table.resizeRowsToContents()
@@ -82,7 +82,7 @@ class ProxyModeController(PluginsUI,ControllerBlueprint):
                 else:
                     item = QtGui.QTableWidgetItem(item)
                     self.table.setItem(m, n, item)
-        self.table.setHorizontalHeaderLabels(self.THeadersPluginsProxy.keys())
+        self.table.setHorizontalHeaderLabels(list(self.THeadersPluginsProxy.keys()))
         
         
         # change default pyoxy to DNS2Proxy if mitmproxy is not installed

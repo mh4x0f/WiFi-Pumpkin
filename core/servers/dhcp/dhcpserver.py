@@ -1,4 +1,4 @@
-import IN
+#import IN
 import time
 import socket
 import struct
@@ -195,8 +195,8 @@ class DHCPServer(QThread):
         self.iface        = iface
         # If SO_BINDTODEVICE is present, it is possible for dhcpd to operate on Linux with more than one network interface.
         # man 7 socket
-        if not hasattr(IN, "SO_BINDTODEVICE"):
-            IN.SO_BINDTODEVICE = 25
+        # if not hasattr(IN, "SO_BINDTODEVICE"):
+        SO_BINDTODEVICE = 25
         self.LoopDhcpStatus = True
         self.ip = self.dhcp_options['router']
         self.port = 67
@@ -227,7 +227,7 @@ class DHCPServer(QThread):
         self.magic = struct.pack('!I', 0x63825363) # magic cookie.
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, IN.SO_BINDTODEVICE, self.iface + '\0')
+        self.sock.setsockopt(socket.SOL_SOCKET, SO_BINDTODEVICE, str(self.iface + '\0').encode())
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         self.sock.bind(('', self.port))
@@ -282,13 +282,13 @@ class DHCPServer(QThread):
         '''Parse a string of TLV-encoded options.'''
         ret = {}
         while(raw):
-            [tag] = struct.unpack('B', raw[0])
+            [tag] = struct.unpack('B', bytes([raw[0]]))
             if tag == 0: # padding
                 raw = raw[1:]
                 continue
             if tag == 255: # end marker
                 break
-            [length] = struct.unpack('B', raw[1])
+            [length] = struct.unpack('B', bytes([raw[1]]))
             value = raw[2:2 + length]
             raw = raw[2 + length:]
             if tag in ret:
@@ -422,6 +422,7 @@ class DHCPServer(QThread):
                         'host_name': self.leases[client_mac]['options'][12][0],
                         'mac_addr': self.get_mac([client_mac][0]).lower(),
                     })
+                    
                 except OutOfLeasesError:
                     pass
                 except Exception:

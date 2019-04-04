@@ -29,7 +29,7 @@ class ComponentBlueprint(object):
     def shutdown(self):
         pass
     def LogOutput(self,data):
-        print data
+        print(data)
     def Start(self):
         self.PreBoot()
         self.Initialize()
@@ -42,7 +42,7 @@ class ComponentBlueprint(object):
         pass
 
     def stupidthings(self):
-        print "From Component Blueprint"
+        print("From Component Blueprint")
     def PreBoot(self):
         pass
     def PostBoot(self):

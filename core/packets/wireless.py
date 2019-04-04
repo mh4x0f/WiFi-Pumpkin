@@ -1,4 +1,4 @@
-import Queue
+import queue as Queue
 from scapy.all import *
 from threading import Thread
 from PyQt4.QtCore import QThread,SIGNAL
@@ -33,7 +33,7 @@ class ThreadScannerAP(QThread):
         self.stopped    = False
 
     def run(self):
-        print 'Starting Thread:' + self.objectName()
+        print('Starting Thread:' + self.objectName())
         self.LoopScanmer()
 
     def scannerAP(self,q):
@@ -64,7 +64,7 @@ class ThreadScannerAP(QThread):
 
     def stop(self):
         self.stopped = True
-        print 'Stop thread:' + self.objectName()
+        print('Stop thread:' + self.objectName())
 
 
 class ThreadDeauth(QThread):
@@ -77,7 +77,7 @@ class ThreadDeauth(QThread):
         self.pkts       = []
 
     def run(self):
-        print 'Starting Thread:' + self.objectName()
+        print('Starting Thread:' + self.objectName())
         self.status = True
         conf.iface = self.interface
         pkt1 = RadioTap()/Dot11(type=0,subtype=12,addr1=self.client,
@@ -91,7 +91,7 @@ class ThreadDeauth(QThread):
 
     def stop(self):
         self.status = False
-        print 'Stop thread:' + self.objectName()
+        print('Stop thread:' + self.objectName())
 
 
 class ThreadProbeScan(QThread):
@@ -102,7 +102,7 @@ class ThreadProbeScan(QThread):
         self.captured   = []
 
     def run(self):
-        print "Starting Thread:" + self.objectName()
+        print("Starting Thread:" + self.objectName())
         self.ProbeResqest()
     def Startprobe(self,q):
         while not self.finished:
@@ -138,7 +138,7 @@ class ThreadProbeScan(QThread):
                 self.emit(SIGNAL("Activated( QString )"),mac_address + '|'+ssid +'|'+devices)
 
     def stop(self):
-        print "Stop thread:" + self.objectName()
+        print("Stop thread:" + self.objectName())
         self.finished = True
         self.captured = []
         self.sniff.join(0)

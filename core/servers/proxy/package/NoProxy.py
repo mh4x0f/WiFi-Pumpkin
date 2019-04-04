@@ -15,7 +15,7 @@ from core.widgets.docks.dockmonitor import (
 )
 from core.widgets.pluginssettings import PumpkinProxySettings
 from plugins.analyzers import *
-from plugins.external.scripts import *
+#from plugins.external.scripts import *
 
 
 class NoProxy(ProxyMode):

@@ -173,7 +173,7 @@ class frm_update_attack(PumpkinModule):
             if path.isfile(directory+filename):
                 remove(directory+filename)
             copyfile(self.path_file,directory+filename)
-        except OSError,e:
+        except OSError  as e:
             return QtGui.QMessageBox.warning(self,'error',e)
         file_html = open(pathPage,'r').read()
         if info:

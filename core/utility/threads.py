@@ -15,7 +15,7 @@ from core.utils import setup_logger,Refactor
 from subprocess import (Popen,PIPE,STDOUT)
 from PyQt4.QtCore import QThread,pyqtSignal,SIGNAL,pyqtSlot,QProcess,QObject,SLOT
 from PyQt4.QtGui import QMessageBox
-from plugins.external.sergio_proxy.plugins import *
+#from plugins.external.sergio_proxy.plugins import *
 from multiprocessing import Process,Manager
 
 
@@ -54,11 +54,11 @@ Copyright:
 class ThreadBase(QThread):
     def __init__(self,cmd, session =None):
         super(ThreadBase,self).__init__()
-        self.args = cmd
+        self.cmd = cmd
         self.session = session
         self.process = None
     def run(self):
-        print self.getNameThread
+        #print(self.getNameThread)
         self.startup()
     def startup(self):
         pass
@@ -94,7 +94,7 @@ class ThreadPopen(ThreadBase):
             self.emit(SIGNAL('Activated( QString )'),line.rstrip())
 
     def stop(self):
-        print 'Stop thread:' + self.objectName()
+        print('Stop thread:' + self.objectName())
         if self.process is not None:
             self.process.terminate()
             self.process = None
@@ -108,20 +108,21 @@ class ThRunDhcp(ThreadBase):
     def getNameThread(self):
         return '[New DHCP Thread {} ({})]'.format(self.process.pid,self.objectName())
     def startup(self):
+        print(self.cmd)
         self.process = Popen(self.cmd,
         stdout=PIPE,stderr=STDOUT,preexec_fn=setsid)
         setup_logger('dhcp', C.LOG_DHCP,self.session)
         loggerDhcp = logging.getLogger('dhcp')
         loggerDhcp.info('---[ Start DHCP '+asctime()+']---')
         for line,data in enumerate(iter(self.process.stdout.readline, b'')):
-            if 'DHCPREQUEST for' in data.rstrip():
-                self.sendRequest.emit(data.split())
-            elif 'DHCPACK on' in data.rstrip():
-                self.sendRequest.emit(data.split())
-            loggerDhcp.info(data.rstrip())
+            if 'DHCPREQUEST for' in str(data.rstrip()):
+                self.sendRequest.emit(str(data.split()))
+            elif 'DHCPACK on' in str(data.rstrip()):
+                self.sendRequest.emit(str(data.split()))
+            loggerDhcp.info(str(data.rstrip()))
 
     def stop(self):
-        print 'Thread::[{}] successfully stopped.'.format(self.objectName())
+        print('Thread::[{}] successfully stopped.'.format(self.objectName()))
         if self.process is not None:
             killpg(getpgid(self.process.pid), signal.SIGTERM)
 
@@ -206,11 +207,11 @@ class ProcessThread(QObject):
         self.procThread = QProcess(self)
         self.procThread.setProcessChannelMode(QProcess.MergedChannels)
         QObject.connect(self.procThread, SIGNAL('readyReadStandardOutput()'), self, SLOT('readProcessOutput()'))
-        self.procThread.start(self.cmd.keys()[0],self.cmd[self.cmd.keys()[0]])
-        print '[New Thread {} ({})]'.format(self.procThread.pid(),self.objectName())
+        self.procThread.start(list(self.cmd.keys())[0],self.cmd[list(self.cmd.keys())[0]])
+        print('[New Thread {} ({})]'.format(self.procThread.pid(),self.objectName()))
 
     def stop(self):
-        print 'Thread::[{}] successfully stopped.'.format(self.objectName())
+        print('Thread::[{}] successfully stopped.'.format(self.objectName()))
         if hasattr(self,'procThread'):
             self.procThread.terminate()
             self.procThread.waitForFinished()
@@ -247,15 +248,15 @@ class ProcessHostapd(QObject):
         self.procHostapd = QProcess(self)
         self.procHostapd.setProcessChannelMode(QProcess.MergedChannels)
         QObject.connect(self.procHostapd, SIGNAL('readyReadStandardOutput()'), self, SLOT('read_OutputCommand()'));
-        self.procHostapd.start(self.cmd.keys()[0],self.cmd[self.cmd.keys()[0]])
-        print '[New Thread {} ({})]'.format(self.procHostapd.pid(),self.objectName())
+        self.procHostapd.start(list(self.cmd.keys())[0],self.cmd[list(self.cmd.keys())[0]])
+        print('[New Thread {} ({})]'.format(self.procHostapd.pid(),self.objectName()))
 
     def makeLogger(self):
         setup_logger('hostapd', C.LOG_HOSTAPD, self.session)
         self.log_hostapd = logging.getLogger('hostapd')
 
     def stop(self):
-        print 'Thread::[{}] successfully stopped.'.format(self.objectName())
+        print('Thread::[{}] successfully stopped.'.format(self.objectName()))
         if hasattr(self,'procHostapd'):
             QObject.disconnect(self.procHostapd,
             SIGNAL('readyReadStandardOutput()'), self, SLOT('read_OutputCommand()'))
@@ -290,7 +291,7 @@ class ThreadPumpkinProxy(QObject):
         self.session = session
 
     def start(self):
-        print "[*] Pumpkin-Proxy running on port:8080 \n"
+        print("[*] Pumpkin-Proxy running on port:8080 \n")
         opts = options.Options(listen_port=8080,mode="transparent")
         config = proxy.ProxyConfig(opts)
         state = flow.State()
@@ -301,7 +302,7 @@ class ThreadPumpkinProxy(QObject):
 
     def stop(self):
         self.m.shutdown()
-        print 'Thread::[{}] successfully stopped.'.format(self.objectName())
+        print('Thread::[{}] successfully stopped.'.format(self.objectName()))
 
 
 class Thread_sslstrip(QThread):
@@ -319,7 +320,7 @@ class Thread_sslstrip(QThread):
         return '[New Thread {} ({})]'.format(self.currentThreadId(),self.objectName())
 
     def run(self):
-        print 'SSLstrip v0.9 + POC by Leonardo Nve'
+        print('SSLstrip v0.9 + POC by Leonardo Nve')
         killSessions = True
         spoofFavicon = False
         listenPort   = self.port
@@ -340,7 +341,7 @@ class Thread_sslstrip(QThread):
         self.connector.listen(strippingFactory)
 
     def stop(self):
-        print 'Thread::[{}] successfully stopped.'.format(self.objectName())
+        print('Thread::[{}] successfully stopped.'.format(self.objectName()))
         self.connector.loseConnection()
         #self.connector.connectionLost(reason=None)
 
@@ -416,7 +417,7 @@ class Thread_sergioProxy(QThread):
             for p in plugin_classes:
                 plugins.append(p())
         except:
-            print "Failed to load plugin class %s" % str(p)
+            print("Failed to load plugin class %s" % str(p))
 
         #Give subgroup to each plugin with options
         try:
@@ -433,7 +434,7 @@ class Thread_sergioProxy(QThread):
                 if p.has_opts:
                     p.add_options(sgroup)
         except NotImplementedError:
-            print "Plugin %s claimed option support, but didn't have it." % p.name
+            print("Plugin %s claimed option support, but didn't have it." % p.name)
 
         args = parser.parse_args()
         if args.msf_rc == "/tmp/tmp.rc":
@@ -449,7 +450,7 @@ class Thread_sergioProxy(QThread):
                     p.initialize(args)
                     load.append(p)
         except NotImplementedError:
-            print "Plugin %s lacked initialize function." % p.name
+            print("Plugin %s lacked initialize function." % p.name)
 
         #this whole msf loading process sucks. need to improve
         if args.msf_rc != "/tmp/tmp.rc" or stat("/tmp/tmp.rc").st_size != 0:
@@ -465,12 +466,12 @@ class Thread_sergioProxy(QThread):
         strippingFactory              = http.HTTPFactory(timeout=10)
         strippingFactory.protocol     = StrippingProxy
         strippingFactory.protocol.requestFactory.logging = self.logging
-        print 'sslstrip {} + sergio-proxy v{} online'.format(sslstrip_version,sergio_version)
+        print('sslstrip {} + sergio-proxy v{} online'.format(sslstrip_version,sergio_version))
         #self.connectorSP = reactor.listenTCP(int(listenPort), strippingFactory)
         self.connectorSP = TCP4ServerEndpoint(reactor, int(listenPort))
         self.connectorSP.listen(strippingFactory)
 
     def stop(self):
-        print 'Thread::[{}] successfully stopped.'.format(self.objectName())
+        print('Thread::[{}] successfully stopped.'.format(self.objectName()))
         self.connectorSP.loseConnection()
         #self.connectorSP.connectionLost(reason=None)

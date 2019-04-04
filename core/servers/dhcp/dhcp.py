@@ -54,7 +54,7 @@ class DHCPServers(QtGui.QWidget,ComponentBlueprint):
         pass
 
     def boot(self):
-        print self.command,self.commandargs
+        print(self.command,self.commandargs)
         self.reactor = ProcessThread({self.command: self.commandargs})
         self.reactor._ProcssOutput.connect(self.LogOutput)
         self.reactor.setObjectName(self.Name)  # use dns2proxy as DNS server
@@ -286,7 +286,7 @@ class DHCPClient(HomeDisplay):
         self.ClientTable.setSelectionMode(QtGui.QAbstractItemView.NoSelection)
         self.ClientTable.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.ClientTable.verticalHeader().setVisible(False)
-        self.ClientTable.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.ClientTable.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.ClientTable.verticalHeader().setDefaultSectionSize(23)
         self.ClientTable.horizontalHeader().resizeSection(3, 140)
         self.ClientTable.horizontalHeader().resizeSection(0, 140)

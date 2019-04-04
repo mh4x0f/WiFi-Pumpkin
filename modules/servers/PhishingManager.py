@@ -1,5 +1,5 @@
 from os import popen
-from urllib2 import urlopen, URLError
+from urllib.request import urlopen, URLError
 from bs4 import BeautifulSoup
 import core.utility.constants as C
 from core.main import QtGui, QtCore

@@ -1,6 +1,6 @@
 from scapy.all import *
 from scapy_http import http
-from default import PSniffer
+from plugins.analyzers.default import PSniffer
 
 """
 Description:

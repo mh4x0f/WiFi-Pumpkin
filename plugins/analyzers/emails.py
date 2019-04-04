@@ -1,5 +1,5 @@
 from scapy.all import *
-from default import PSniffer
+from plugins.analyzers.default import PSniffer
 
 class Stealing_emails(PSniffer):
     ''' capture POP3,IMAP,SMTP '''

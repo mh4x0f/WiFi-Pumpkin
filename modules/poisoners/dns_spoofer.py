@@ -253,7 +253,7 @@ class frm_DnsSpoof(PumpkinModule):
                     item.setText(text)
                     item.setSizeHint(QtCore.QSize(30,30))
                     self.myListDns.addItem(item)
-                except gaierror,e:
+                except gaierror as e:
                     QtGui.QMessageBox.information(self,'error',str(e))
                     return
         elif action == clearitem:

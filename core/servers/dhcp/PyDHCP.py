@@ -1,5 +1,6 @@
 from core.config.globalimport import *
 from core.servers.dhcp.dhcpserver import DHCPServer, DNSServer
+from core.servers.dhcp.dhcpserver_lib import DHCPThread
 from core.utility.threads import ProcessThread
 from core.servers.dhcp.dhcp import DHCPServers
 
@@ -20,9 +21,10 @@ class PyDHCP(DHCPServers):
         return self._isRunning
 
     def boot(self):
-        self.reactor = DHCPServer(str(self.parent.SessionConfig.Wireless.WLANCard.currentText()), self.parent.SessionConfig.DHCP.conf)
+        #self.reactor = DHCPServer(str(self.parent.SessionConfig.Wireless.WLANCard.currentText()), self.parent.SessionConfig.DHCP.conf)
+        self.reactor = DHCPThread(str(self.parent.SessionConfig.Wireless.WLANCard.currentText()),self.parent.SessionConfig.DHCP.conf )
         if not self.getStatusReactor:
             self.setIsRunning(True)
             self.reactor.sendConnetedClient.connect(self.get_DHCP_Discover_clients)
             self.reactor.setObjectName('Py_DHCP')
-        self.reactor.LoopDhcpStatus = True
+        #self.reactor.LoopDhcpStatus = True

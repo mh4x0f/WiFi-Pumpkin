@@ -167,14 +167,14 @@ class WifiPumpkin(QtGui.QWidget):
 
 
         # check update from github repository
-        self.Timer = waiterSleepThread()
-        self.Timer.quit.connect(self.get_status_new_commits)
-        self.UpdateSoftware = frm_githubUpdate(version)
-        self.UpdateSoftware.resize(480, 280)
-        self.UpdateSoftware.show()
-        self.UpdateSoftware.setHidden(True)
-        self.UpdateSoftware.checkUpdate()
-        self.Timer.start()
+        # self.Timer = waiterSleepThread()
+        # self.Timer.quit.connect(self.get_status_new_commits)
+        # self.UpdateSoftware = frm_githubUpdate(version)
+        # self.UpdateSoftware.resize(480, 280)
+        # self.UpdateSoftware.show()
+        # self.UpdateSoftware.setHidden(True)
+        # self.UpdateSoftware.checkUpdate()
+        # self.Timer.start()
 
         self.status_plugin_proxy_name = QtGui.QLabel('')  # status name proxy activated
 
@@ -235,7 +235,7 @@ class WifiPumpkin(QtGui.QWidget):
         # TODO Refactored default widget
         self.index = 0
         indexpass = False
-        for v in sorted(self.coreui.allui):
+        for v in self.coreui.allui:
             if v.Name == "Home":
                 indexpass =True
 
@@ -471,7 +471,7 @@ class WifiPumpkin(QtGui.QWidget):
         # create Horizontal widgets
         hbox = QtGui.QHBoxLayout()
         self.hBoxbutton.addWidget(self.LeftTabBar)
-        self.hBoxbutton.addWidget(self.progress)
+        #self.hBoxbutton.addWidget(self.progress)
         # add button start and stop
         hbox.addLayout(self.hBoxbutton)
         hbox.addWidget(self.Stack)
@@ -494,7 +494,7 @@ class WifiPumpkin(QtGui.QWidget):
         self.progress.setFixedHeight(13)
         self.progress.setFixedWidth(170)
 
-        #self.progress.setFixedWidth(140)
+        self.progress.setFixedWidth(140)
         # add widgets in status bar
         self.StatusBar.addWidget(QtGui.QLabel('Connection:'))
         self.StatusBar.addWidget(self.connected_status)
@@ -837,7 +837,7 @@ class WifiPumpkin(QtGui.QWidget):
             print('[*] Sharing Internet Connections with NAT...')
         iptables = []
         # get all rules in settings->iptables
-        for index in xrange(self.FSettings.ListRules.count()):
+        for index in range(self.FSettings.ListRules.count()):
            iptables.append(str(self.FSettings.ListRules.item(index).text()))
         for rulesetfilter in iptables:
             if self.InternetShareWiFi: # disable share internet from network

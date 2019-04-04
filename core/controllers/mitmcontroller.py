@@ -51,7 +51,7 @@ class MitmController(PluginsUI,ControllerBlueprint):
         self.table.verticalHeader().setVisible(False)
         self.table.verticalHeader().setDefaultSectionSize(23)
         self.table.setSortingEnabled(True)
-        self.table.setHorizontalHeaderLabels(self.MitmModeTable.keys())
+        self.table.setHorizontalHeaderLabels(list(self.MitmModeTable.keys()))
         self.table.horizontalHeader().resizeSection(0, 158)
         self.table.horizontalHeader().resizeSection(1, 80)
         self.table.resizeRowsToContents()
@@ -66,7 +66,7 @@ class MitmController(PluginsUI,ControllerBlueprint):
                 else:
                     item = QtGui.QTableWidgetItem(item)
                     self.table.setItem(m, n, item)
-        self.table.setHorizontalHeaderLabels(self.MitmModeTable.keys())
+        self.table.setHorizontalHeaderLabels(list(self.MitmModeTable.keys()))
     def DisableMitmMode(self,status):
         self.SetNoMitmMode.emit(status)
     def dockUpdate(self,add=True):

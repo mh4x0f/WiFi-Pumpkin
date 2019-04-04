@@ -1,5 +1,5 @@
 from config import Config
-import urllib2
+from urllib.request import urlopen, URLError
 from subprocess import call,Popen,PIPE,STDOUT
 import threading
 from os import path
@@ -28,7 +28,7 @@ Copyright:
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 """
 
-class TimerThread(threading._Timer):
+class TimerThread(threading.Timer): #threading._Timer):
     def run(self):
         while True:
             self.finished.wait(self.interval)
@@ -46,11 +46,11 @@ class UrllibDownload(QThread):
         self.response = None
     def run(self):
         try:
-            self.response = urllib2.urlopen(self.url).read()
-        except urllib2.URLError:
+            self.response = urlopen(self.url).read()
+        except URLError:
             try:
-                self.response = urllib2.urlopen(self.url.replace('Core','core')).read()
-            except urllib2.URLError:
+                self.response = urlopen(self.url.replace('Core','core')).read()
+            except URLError:
                 return self.data_downloaded.emit('URLError')
         return self.data_downloaded.emit(self.response)
 

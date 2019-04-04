@@ -50,7 +50,7 @@ class SettingsINI(object):
 
 	def get_all_keys(self):
 		""" get all keys on settings"""
-		return str(self.psettings.allKeys().join("<join>")).split("<join>")
+		return str(str(self.psettings.allKeys()).join("<join>")).split("<join>")
 
 	def closeGroup(self):
 		""" close group settings"""

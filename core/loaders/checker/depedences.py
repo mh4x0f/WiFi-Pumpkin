@@ -5,7 +5,7 @@ from shutil import copy
 import core.utility.constants as C
 
 def notinstall(app):
-    print '[%s✘%s] %s is not %sinstalled%s.'%(C.RED,C.ENDC,app,C.YELLOW,C.ENDC)
+    print('[%s✘%s] %s is not %sinstalled%s.'%(C.RED,C.ENDC,app,C.YELLOW,C.ENDC))
 
 def check_dep_pumpkin():
     # check hostapd

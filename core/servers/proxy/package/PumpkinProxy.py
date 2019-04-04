@@ -21,7 +21,7 @@ from core.utility.threads import  (
 from core.widgets.pluginssettings import PumpkinProxySettings
 from core.widgets.docks.dock import DockableWidget
 from plugins.analyzers import *
-from plugins.external.scripts import *
+#from plugins.external.scripts import *
 
 if (ThreadPumpkinProxy().isMitmProxyInstalled()):
     from plugins.extension import *
@@ -45,7 +45,7 @@ class PumpkinProxyDock(DockableWidget):
         self.maindockwidget.verticalHeader().setDefaultSectionSize(27)
         self.maindockwidget.setSortingEnabled(True)
         self.THeaders  = OrderedDict([ ('Plugin',[]),('Output',[])])
-        self.maindockwidget.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.maindockwidget.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.maindockwidget.horizontalHeader().resizeSection(0,150)
         self.get_AllPluginName()
         self.setWidget(self.maindockwidget)
@@ -75,14 +75,14 @@ class PumpkinProxyDock(DockableWidget):
                 if key == 'Plugin':
                     item.setTextAlignment(QtCore.Qt.AlignVCenter | QtCore.Qt.AlignCenter)
                 self.maindockwidget.setItem(m, n, item)
-        self.maindockwidget.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.maindockwidget.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.maindockwidget.verticalHeader().setDefaultSectionSize(27)
         self.maindockwidget.scrollToBottom()
 
     def stopProcess(self):
         self.maindockwidget.setRowCount(0)
         self.maindockwidget.clearContents()
-        self.maindockwidget.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.maindockwidget.setHorizontalHeaderLabels(list(self.THeaders.keys()))
 
 class PumpkinMitmproxy(ProxyMode):
     ''' settings  Transparent Proxy '''
@@ -137,7 +137,7 @@ class PumpkinMitmproxy(ProxyMode):
         self.TabPlugins.verticalHeader().setDefaultSectionSize(27)
         self.TabPlugins.setSortingEnabled(True)
         self.THeaders  = OrderedDict([ ('Plugins',[]),('Settings',[]),('Description',[])])
-        self.TabPlugins.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.TabPlugins.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.TabPlugins.horizontalHeader().resizeSection(0,158)
         self.TabPlugins.horizontalHeader().resizeSection(1,80)
 
@@ -169,7 +169,7 @@ class PumpkinMitmproxy(ProxyMode):
                 else:
                     item = QtGui.QTableWidgetItem(item)
                     self.TabPlugins.setItem(m, n, item)
-        self.TabPlugins.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.TabPlugins.setHorizontalHeaderLabels(list(self.THeaders.keys()))
 
         # check status all checkbox plugins
         for box in self.check_PluginDict.keys():

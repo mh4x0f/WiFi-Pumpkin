@@ -203,8 +203,8 @@ class ProgressBarWid(QtGui.QProgressBar):
 
     def text(self):
         if self._text != None:
-            return QtCore.QString(str(self._text))
-        return QtCore.QString('')
+            return str(self._text)
+        return ''
 
     def update_bar_simple(self, add):
         value = self.value() + add

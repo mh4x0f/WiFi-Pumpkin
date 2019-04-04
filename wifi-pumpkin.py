@@ -1,4 +1,3 @@
-#!/usr/bin/env python2.7
 from logging import getLogger,ERROR
 getLogger('scapy.runtime').setLevel(ERROR)
 
@@ -27,9 +26,6 @@ Copyright:
 
 from sys import argv,exit,version_info
 import core.utility.constants as C
-if version_info.major != 2:
-    exit('[!] WiFi-Pumpkin need Python 2 :(')
-
 
 if __name__ == '__main__':
     from core.loaders.checker.depedences import check_dep_pumpkin

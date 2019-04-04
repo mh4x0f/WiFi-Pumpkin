@@ -93,7 +93,7 @@ class dockCredsMonitor(QTableWidget):
         self.verticalHeader().setDefaultSectionSize(27)
         self.setSortingEnabled(True)
         self.THeaders  = OrderedDict([ ('Username',[]),('Password',[]),('Url',[]),('Source/Destination',[])])
-        self.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.horizontalHeader().resizeSection(0,120)
         self.horizontalHeader().resizeSection(1,120)
         self.horizontalHeader().resizeSection(2,180)
@@ -112,14 +112,14 @@ class dockCredsMonitor(QTableWidget):
                 item = QTableWidgetItem(item)
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignCenter)
                 self.setItem(m, n, item)
-        self.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.verticalHeader().setDefaultSectionSize(27)
         self.scrollToBottom()
 
     def stopProcess(self):
         self.setRowCount(0)
         self.clearContents()
-        self.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.setHorizontalHeaderLabels(list(self.THeaders.keys()))
 
 class dockUrlMonitor(QTreeView):
     ''' dock widget for get all credentials logger netcreds'''
@@ -166,7 +166,7 @@ class dockTCPproxy(QTableWidget):
         self.verticalHeader().setDefaultSectionSize(27)
         self.setSortingEnabled(True)
         self.THeaders  = OrderedDict([ ('Plugin',[]),('Logging',[])])
-        self.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.horizontalHeader().resizeSection(0,150)
         self.horizontalHeader().resizeSection(1,150)
 
@@ -183,14 +183,14 @@ class dockTCPproxy(QTableWidget):
                 if key != 'Logging':
                     item.setTextAlignment(Qt.AlignVCenter | Qt.AlignCenter)
                 self.setItem(m, n, item)
-        self.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.verticalHeader().setDefaultSectionSize(27)
         self.scrollToBottom()
 
     def stopProcess(self):
         self.setRowCount(0)
         self.clearContents()
-        self.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.setHorizontalHeaderLabels(list(self.THeaders.keys()))
 
 
 class dockPumpkinProxy(QTableWidget):
@@ -209,7 +209,7 @@ class dockPumpkinProxy(QTableWidget):
         self.verticalHeader().setDefaultSectionSize(27)
         self.setSortingEnabled(True)
         self.THeaders  = OrderedDict([ ('Plugin',[]),('Output',[])])
-        self.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.horizontalHeader().resizeSection(0,150)
         self.get_AllPluginName()
 
@@ -238,11 +238,11 @@ class dockPumpkinProxy(QTableWidget):
                 if key == 'Plugin':
                     item.setTextAlignment(Qt.AlignVCenter | Qt.AlignCenter)
                 self.setItem(m, n, item)
-        self.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.setHorizontalHeaderLabels(list(self.THeaders.keys()))
         self.verticalHeader().setDefaultSectionSize(27)
         self.scrollToBottom()
 
     def stopProcess(self):
         self.setRowCount(0)
         self.clearContents()
-        self.setHorizontalHeaderLabels(self.THeaders.keys())
+        self.setHorizontalHeaderLabels(list(self.THeaders.keys()))
